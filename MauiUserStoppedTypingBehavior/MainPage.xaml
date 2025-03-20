@@ -1,0 +1,45 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             xmlns:system="clr-namespace:System;assembly=System.Runtime"
+             xmlns:mauiUserStoppedTypingBehavior="clr-namespace:MauiUserStoppedTypingBehavior"
+             x:Class="MauiUserStoppedTypingBehavior.MainPage"
+             x:DataType="mauiUserStoppedTypingBehavior:MainViewModel">
+
+    <VerticalStackLayout
+        Padding="30,0"
+        Spacing="25">
+        <SearchBar
+            x:Name="UserStoppedTypingSearchBar"
+            HeightRequest="40"
+            Placeholder="Search">
+            <SearchBar.Behaviors>
+                <toolkit:UserStoppedTypingBehavior
+                    BindingContext="{Binding Path=BindingContext, Source={x:Reference UserStoppedTypingSearchBar}, x:DataType=SearchBar}"
+                    Command="{Binding SearchCommand, Mode=OneTime}"
+                    StoppedTypingTimeThreshold="750"
+                    ShouldDismissKeyboardAutomatically="False">
+                </toolkit:UserStoppedTypingBehavior>
+            </SearchBar.Behaviors>
+        </SearchBar>
+
+        <CollectionView
+            Margin="0,8,0,0"
+            ItemsSource="{Binding Items, Mode=OneTime}">
+            <CollectionView.ItemsLayout>
+                <LinearItemsLayout Orientation="Vertical" ItemSpacing="4" />
+            </CollectionView.ItemsLayout>
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="system:String">
+                    <Label Text="{Binding ., Mode=OneTime}" />
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+            <CollectionView.EmptyView>
+                <Label Text="No search result}" />
+            </CollectionView.EmptyView>
+        </CollectionView>
+    </VerticalStackLayout>
+
+</ContentPage>
